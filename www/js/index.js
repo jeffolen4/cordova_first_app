@@ -45,6 +45,17 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    addListItem: function() {
+      if ($("#item").val() != "") {
+        if ($("#empty-list").length) {
+          $("#empty-list").remove();
+        }
+        new_item = $("<li>"+$("#item").val()+"</li>");
+        $("#item-list").append(new_item)
+        $("#item").val("")
+      }
     }
 };
 

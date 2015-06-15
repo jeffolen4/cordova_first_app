@@ -43,8 +43,8 @@
         </div>
 
         <div data-role="content">
-          <ul id="item-list" data-role="listview">
-            <li id="empty-list">{list empty}</li>
+          <ul id="item-list" data-role="listview" data-icon="delete">
+            <li id="empty-list"><a href="#">{list empty}</a></li>
           </ul>
         </div>
 
@@ -80,7 +80,7 @@
         </div>
 
         <div data-role="content">
-          <form method="post">
+          <form class="form-inline" method="post">
             <label for="item" type="text">Item:</label>
             <input type="text" name="item" id="item" value="">
             <a href="#add-item" data-role="button" data-icon="arrow-l" data-transition="fade" data-theme="b" onclick="app.addListItem();">Add</a>

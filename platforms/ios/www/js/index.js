@@ -52,9 +52,13 @@ var app = {
         if ($("#empty-list").length) {
           $("#empty-list").remove();
         }
-        new_item = $("<li>"+$("#item").val()+"</li>");
+        new_item = $("<li><a href='#' class='ui-btn ui-btn-icon-right ui-icon-delete'>"+$("#item").val()+"</a></li>");
+        $(new_item).click( function(e) {
+          e.target.remove();
+        });
         $("#item-list").append(new_item)
         $("#item").val("")
+        window.location.href = "#mainpage"
       }
     }
 };

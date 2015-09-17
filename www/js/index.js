@@ -27,6 +27,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        this.fetchItemsList();
     },
     // deviceready Event Handler
     //
@@ -43,8 +44,64 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+    },
 
-        console.log('Received Event: ' + id);
+    addListItem: function() {
+      if ($("#item").val() != "") {
+        this.insertNewItem($("#item").val());
+        $("#item").val("")
+        window.location.href = "#mainpage"
+      }
+    },
+
+    insertNewItem: function(description, id) {
+      if (id == undefined) {
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/items.json",
+          data: { description: description },
+          success: function(data) {
+            id = data;
+            $("#item-list").find("#undefined").attr("id",id)
+          },
+          fail: function() {
+            alert("add failed!")
+          }
+        });
+      }
+      new_item = $("<li id='"+id+"'><a href='#mainpage' class='ui-btn ui-btn-icon-right ui-icon-delete'>"+description+"</a></li>");
+      new_item.click( function(e) {
+        if (e.target.parentElement.id != 0 && e.target.parentElement.id != "undefined") {
+          app.deleteItem(e.target.parentElement.id)
+        }
+        e.target.remove();
+      });
+      $("#item-list").append(new_item)
+    },
+
+    fetchItemsList: function() {
+      items = [];
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/items.json",
+        success: function(data) {
+          for( var i=0; i < data.length; i++) {
+            app.insertNewItem(data[i].description, data[i].id);
+          };
+        }
+      });
+      return items;
+    },
+
+    deleteItem: function(id) {
+      url = "http://localhost:3000/items/"+id+".json"
+      $.ajax({
+        type: "POST",
+        url: url,
+        fail: function() {
+          alert("delete failed!")
+        }
+      });
     }
 };
 

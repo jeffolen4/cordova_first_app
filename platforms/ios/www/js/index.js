@@ -44,14 +44,10 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
     },
 
     addListItem: function() {
       if ($("#item").val() != "") {
-        if ($("#empty-list").length) {
-          $("#empty-list").remove();
-        }
         this.insertNewItem($("#item").val());
         $("#item").val("")
         window.location.href = "#mainpage"
